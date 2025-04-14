@@ -1,40 +1,43 @@
-/* global ConfigManager, TimeSync */
-
 document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("visibilitychange", function () {
-      if (!document.hidden) {
-        checkAndFixTime();
+  const message = document.getElementById("message");
+  message.textContent = "Consultando timeapi.io...";
+
+  const apiUrl =
+    "https://timeapi.io/api/Time/current/coordinate?latitude=-34.6037&longitude=-58.3816";
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", apiUrl, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+
+          if (!data.dateTime) throw new Error("Sin campo dateTime");
+
+          const targetTime = new Date(data.dateTime);
+          const currentTime = new Date();
+
+          message.innerHTML =
+            "Hora actual: " +
+            currentTime.toLocaleString() +
+            "<br>" +
+            "Nueva hora: " +
+            targetTime.toLocaleString();
+
+          try {
+            tizen.time.setCurrentDateTime(targetTime);
+            message.innerHTML += "<br>Hora ajustada correctamente";
+          } catch (e) {
+            message.innerHTML += "<br>Error al ajustar hora: " + e.message;
+          }
+        } catch (err) {
+          message.textContent = "Error procesando respuesta: " + err.message;
+        }
+      } else {
+        message.textContent = "Error HTTP: " + xhr.status;
       }
-    });
-  
-    checkAndFixTime();
-  });
-  
-  function checkAndFixTime() {
-    const message = document.getElementById("message");
-  
-    if (!message) {
-      console.error("Elemento con id 'message' no encontrado");
-      return;
     }
-  
-    ConfigManager.loadConfig()
-      .then(function (config) {
-        TimeSync.init(config, function (statusText) {
-          message.textContent = statusText;
-  
-          setTimeout(function () {
-            try {
-              tizen.application.getCurrentApplication().exit();
-            } catch (e) {
-              console.error("No se pudo cerrar la app:", e);
-            }
-          }, 5000);
-        });
-      })
-      .catch(function (err) {
-        console.error("Error al sincronizar:", err);
-        message.textContent = "Error al sincronizar";
-      });
-  }
-  
+  };
+  xhr.send();
+});
