@@ -1,40 +1,30 @@
+<<<<<<< Updated upstream
 /* global ConfigManager, TimeSync */
+=======
+window.onload = async () => {
+  const msg = document.getElementById("message");
+>>>>>>> Stashed changes
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("visibilitychange", function () {
-      if (!document.hidden) {
-        checkAndFixTime();
-      }
+  try {
+    const config = await ConfigManager.LoadConfig();
+
+    TimeSync.init(config, (status) => {
+      msg.textContent = status;
+
+      setTimeout(() => {
+        try {
+          tizen.application.getCurrentApplication().exit();
+        } catch (e) {
+          console.error("No se puede cerrar la app main", e);
+        }
+      }, 5000);
     });
-  
-    checkAndFixTime();
-  });
-  
-  function checkAndFixTime() {
-    const message = document.getElementById("message");
-  
-    if (!message) {
-      console.error("Elemento con id 'message' no encontrado");
-      return;
-    }
-  
-    ConfigManager.loadConfig()
-      .then(function (config) {
-        TimeSync.init(config, function (statusText) {
-          message.textContent = statusText;
-  
-          setTimeout(function () {
-            try {
-              tizen.application.getCurrentApplication().exit();
-            } catch (e) {
-              console.error("No se pudo cerrar la app:", e);
-            }
-          }, 5000);
-        });
-      })
-      .catch(function (err) {
-        console.error("Error al sincronizar:", err);
-        message.textContent = "Error al sincronizar";
-      });
+  } catch (e) {
+    msg.textContent = "Error cargando configuración main";
+    console.error(e);
   }
+<<<<<<< Updated upstream
   
+=======
+};
+>>>>>>> Stashed changes

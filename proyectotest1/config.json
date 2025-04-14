@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "serverURL": "http://nocus.samsungcms.com",
     "tlsPort": 7002,
     "useTLs": true,
@@ -6,4 +7,10 @@
     "lat": 39.603481,
     "lng": -119.682251,
     "geonamesUser": "fixtimetest"
+=======
+    "serverUrl": "https://worldtimeapi.org/api/ip",
+    "tlsPort": 443,
+    "forceTls": true,
+    "fallbackTimezone": "UTC+2"
+>>>>>>> Stashed changes
   }

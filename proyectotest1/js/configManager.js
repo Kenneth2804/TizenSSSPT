@@ -20,4 +20,22 @@ window.ConfigManager = {
         xhr.send();
       });
     }
+<<<<<<< Updated upstream
   };
+=======
+  };*/
+
+
+const ConfigManager = {
+  async LoadConfig() {
+    try{
+    const response = await fetch ("config.json");
+    if (!response.ok) throw new Error("No se pudo cargar config.json");
+    const json = await response.json();
+    return json;
+  } catch (e) {
+    console.error("Error cargando configuracion configManager", e);
+  }
+  }
+};
+>>>>>>> Stashed changes
