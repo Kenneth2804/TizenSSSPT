@@ -1,0 +1,39 @@
+ninja_required_version = 1.7.2
+
+rule gn
+  command = d:/tizen/tools/tizen-core/tgn.exe --root=./.. -q --c gen .
+  description = Regenerating ninja files
+
+rule tz_gn
+  command = d:/tizen/tools/tizen-core/tz.exe gen .
+  description = Regenerating build files
+
+build build.tz: tz_gn
+  generator = 1
+  depfile = build.tz.d
+
+build build.ninja: gn | build.tz
+  generator = 1
+  depfile = build.ninja.d
+
+subninja toolchain.ninja
+
+build build: phony obj/Build/build.stamp
+build pack: phony obj/Build/pack.stamp
+build proyectotest1.build_web: phony obj/proyectotest1/proyectotest1.build_web.stamp
+build Build$:build: phony obj/Build/build.stamp
+build Build$:hash: phony obj/Build/hash.stamp
+build Build$:pack: phony obj/Build/pack.stamp
+build proyectotest1$:all: phony obj/proyectotest1/all.stamp
+build proyectotest1$:hash: phony obj/proyectotest1/hash.stamp
+build proyectotest1$:proyectotest1.build_web: phony obj/proyectotest1/proyectotest1.build_web.stamp
+
+build all: phony $
+    obj/Build/build.stamp $
+    obj/Build/hash.stamp $
+    obj/Build/pack.stamp $
+    obj/proyectotest1/all.stamp $
+    obj/proyectotest1/hash.stamp $
+    obj/proyectotest1/proyectotest1.build_web.stamp
+
+default all

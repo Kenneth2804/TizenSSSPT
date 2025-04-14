@@ -1,0 +1,1 @@
+build.tz: D:/Nueva\ carpeta/profile/profiles.xml ../tizen_web_project.yaml

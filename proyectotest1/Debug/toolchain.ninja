@@ -1,0 +1,27 @@
+rule stamp
+  command = d:/tizen/tools/tizen-core/uutils touch ${out}
+  description = STAMP ${out}
+rule copy
+  command = cmd /c " (d:/tizen/tools/tizen-core/uutils rm -rf ${out} && d:/tizen/tools/tizen-core/uutils cp ${in} ${out}) "
+  description = COPY ${out}
+
+build obj/Build/build.stamp: stamp obj/proyectotest1/all.stamp
+build obj/Build/hash.stamp: stamp obj/proyectotest1/hash.stamp
+rule __Build_pack__d__tizen_tools_tizen-core_dotnet_toolchains_dotnet_builder__rule
+  command = d:/tizen/tools/tizen-core/tz sign-pack web -W . --out proyectotest1.wgt -h -b c$:/Users/Pc/Desktop/pruebatizen/proyectotest1/Build -D -m proyectotest1
+  description = SIGN package files
+  restat = 1
+
+build .wgt/author-signature.xml .wgt/signature1.xml proyectotest1.wgt: __Build_pack__d__tizen_tools_tizen-core_dotnet_toolchains_dotnet_builder__rule | ../config.xml obj/proyectotest1/hash.stamp
+
+build obj/Build/pack.stamp: stamp .wgt/author-signature.xml .wgt/signature1.xml proyectotest1.wgt
+build obj/proyectotest1/all.stamp: stamp obj/proyectotest1/proyectotest1.build_web.stamp
+build obj/proyectotest1/hash.stamp: stamp
+rule __proyectotest1_proyectotest1.build_web__d__tizen_tools_tizen-core_dotnet_toolchains_dotnet_builder__rule
+  command = d:/tizen/tools/tizen-core/tz web-build -o c$:/Users/Pc/Desktop/pruebatizen/proyectotest1/Debug/projects/proyectotest1 -p c$:/Users/Pc/Desktop/pruebatizen/proyectotest1 -s c$:/Users/Pc/Desktop/pruebatizen/proyectotest1/Debug/status/proyectotest1.build_web
+  description = Build web-project : proyectotest1
+  restat = 1
+
+build status/proyectotest1.build_web projects/proyectotest1/.project projects/proyectotest1/.settings/.jsdtscope projects/proyectotest1/.settings/org.eclipse.wst.css.core.prefs projects/proyectotest1/.settings/org.eclipse.wst.jsdt.ui.superType.container projects/proyectotest1/.settings/org.eclipse.wst.jsdt.ui.superType.name projects/proyectotest1/.tproject projects/proyectotest1/Directory.Build.targets projects/proyectotest1/config.json projects/proyectotest1/config.xml projects/proyectotest1/css/style.css projects/proyectotest1/icon.png projects/proyectotest1/images/tizen_32.png projects/proyectotest1/index.html projects/proyectotest1/js/configManager.js projects/proyectotest1/js/main.js projects/proyectotest1/js/timeSync.js projects/proyectotest1/proyectotest1.csproj projects/proyectotest1/tizen_web_project.yaml: __proyectotest1_proyectotest1.build_web__d__tizen_tools_tizen-core_dotnet_toolchains_dotnet_builder__rule | ../.project ../.settings/.jsdtscope ../.settings/org.eclipse.wst.css.core.prefs ../.settings/org.eclipse.wst.jsdt.ui.superType.container ../.settings/org.eclipse.wst.jsdt.ui.superType.name ../.tproject ../Directory.Build.targets ../config.json ../config.xml ../css/style.css ../icon.png ../images/tizen_32.png ../index.html ../js/configManager.js ../js/main.js ../js/timeSync.js ../proyectotest1.csproj ../tizen_web_project.yaml
+
+build obj/proyectotest1/proyectotest1.build_web.stamp: stamp status/proyectotest1.build_web projects/proyectotest1/.project projects/proyectotest1/.settings/.jsdtscope projects/proyectotest1/.settings/org.eclipse.wst.css.core.prefs projects/proyectotest1/.settings/org.eclipse.wst.jsdt.ui.superType.container projects/proyectotest1/.settings/org.eclipse.wst.jsdt.ui.superType.name projects/proyectotest1/.tproject projects/proyectotest1/Directory.Build.targets projects/proyectotest1/config.json projects/proyectotest1/config.xml projects/proyectotest1/css/style.css projects/proyectotest1/icon.png projects/proyectotest1/images/tizen_32.png projects/proyectotest1/index.html projects/proyectotest1/js/configManager.js projects/proyectotest1/js/main.js projects/proyectotest1/js/timeSync.js projects/proyectotest1/proyectotest1.csproj projects/proyectotest1/tizen_web_project.yaml

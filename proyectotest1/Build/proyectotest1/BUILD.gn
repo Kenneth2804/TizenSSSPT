@@ -1,0 +1,34 @@
+import("$tizen_core/build/web/project.gni")
+
+web_project("proyectotest1") {
+  files = [
+      "//.project",
+      "//.settings\.jsdtscope",
+      "//.settings\org.eclipse.wst.css.core.prefs",
+      "//.settings\org.eclipse.wst.jsdt.ui.superType.container",
+      "//.settings\org.eclipse.wst.jsdt.ui.superType.name",
+      "//.tproject",
+      "//Directory.Build.targets",
+      "//config.json",
+      "//config.xml",
+      "//css\style.css",
+      "//icon.png",
+      "//images\tizen_32.png",
+      "//index.html",
+      "//js\configManager.js",
+      "//js\main.js",
+      "//js\timeSync.js",
+      "//proyectotest1.csproj",
+      "//tizen_web_project.yaml",
+  ]
+
+if (opt) {
+  opt_files = [
+  ]
+}
+  
+  deps = [
+  ]
+
+  project_path = "c:/Users/Pc/Desktop/pruebatizen/proyectotest1"
+}
